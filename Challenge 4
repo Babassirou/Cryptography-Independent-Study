@@ -1,0 +1,35 @@
+
+import numpy as np
+
+# Define the key matrix and the encoded message matrix
+key_matrix = np.array([[2, 3], [4, 1]])
+encoded_message = np.array([
+    [30, 57, 85, 95, 39, 59, 97, 69, 45, 44, 79, 33, 72, 88, 119, 95, 57, 83, 45, 123, 57, 44, 117, 25, 96, 62, 78, 99, 135, 98,
+     25, 76, 92, 81, 60, 49, 135, 88, 70, 55, 72, 121, 43, 129, 100, 99, 93, 39, 37, 90, 23, 135, 93, 73, 117, 107, 90, 45, 50,
+     105, 58, 99, 39, 72, 96, 111, 124],
+    [20, 69, 75, 55, 73, 23, 99, 93, 55, 18, 93, 41, 74, 76, 103, 125, 109, 111, 65, 111, 109, 18, 99, 25, 122, 24, 66, 73, 135,
+     96, 25, 92, 124, 117, 50, 63, 135, 96, 50, 35, 114, 107, 31, 123, 100, 123, 51, 43, 29, 70, 21, 135, 61, 71, 129, 79, 80,
+     65, 30, 75, 36, 123, 33, 74, 92, 127, 108]
+])
+
+# Transpose the encoded message matrix to make it a 2xN matrix
+encoded_message = encoded_message.T
+
+# Calculate the inverse of the key matrix
+inv_key_matrix = np.linalg.inv(key_matrix)
+
+# Multiply the inverted key matrix with the encoded message matrix
+decoded_matrix = np.dot(inv_key_matrix, encoded_message.T)
+
+# Map the decoded matrix to the message using A=1, B=2, ..., Z=26
+decoded_message = ""
+for val in decoded_matrix.flatten():
+    # Round the value to the nearest integer
+    decoded_val = round(val)
+    # Map the value to the corresponding letter
+    decoded_char = chr(decoded_val + 64) if 1 <= decoded_val <= 26 else ' '
+    decoded_message += decoded_char
+
+# Print the decoded message
+print("Decoded Message:")
+print(decoded_message)
