@@ -1,0 +1,28 @@
+def organize_into_matrix(numbers, num_rows, num_cols):
+    matrix = []
+
+    if len(numbers) != num_rows * num_cols:
+        print("Error: The number of elements in the list should match the matrix size.")
+        return matrix
+
+    index = 0
+    for i in range(num_rows):
+        row = []
+        for j in range(num_cols):
+            row.append(numbers[index])
+            index += 1
+        matrix.append(row)
+
+    return matrix
+
+# Example Usage with User Input:
+input_numbers = input("Enter a list of numbers separated by spaces: ")
+numbers_list = [int(num) for num in input_numbers.split()]
+
+num_rows = int(input("Enter the number of rows for the matrix: "))
+num_cols = int(input("Enter the number of columns for the matrix: "))
+
+result_matrix = organize_into_matrix(numbers_list, num_rows, num_cols)
+print("Matrix Organized from the List:")
+for row in result_matrix:
+    print(row)
