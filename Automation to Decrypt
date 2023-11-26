@@ -1,22 +1,30 @@
-def decrypt_message(encrypted_numbers, num_shifts):
-    decrypted_message = []
-    numbers = encrypted_numbers.split()
-    for num in numbers:
-        char_code = int(num)
-        if chr(char_code).isalpha():
-            if chr(char_code).islower():
-                decrypted_char = chr(((char_code - ord('a') - num_shifts) % 26) + ord('a'))
-            else:
-                decrypted_char = chr(((char_code - ord('A') - num_shifts) % 26) + ord('A'))
-            decrypted_message.append(decrypted_char)
-        else:
-            decrypted_message.append(chr(char_code))
+def decrypt_message(encoded_numbers, num_shifts):
+    # Defining the alphabet, including space and period.
+    alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ."  
+    alphabet_length = len(alphabet)
+    # Creating an empty list to store decrypted characters.
+    decrypted_chars = []  
 
-    return "".join(decrypted_message)
+# Looping through each number in the input encoded message.
+    for num in encoded_numbers.split():  
+        try:
+            # Calculating the index after applying the decryption algorithm.
+            index = (int(num) - num_shifts - 1) % alphabet_length  
+            # Finding the corresponding character in the alphabet.
+            decrypted_char = alphabet[index] 
+            # Appending the decrypted character to the list.
+            decrypted_chars.append(decrypted_char)  
+        except ValueError:
+            # Handling the case where the input is not a number, keeping it unchanged.
+            decrypted_chars.append(num)  
+ # Combining the decrypted characters to form the final decrypted message.
+    return "".join(decrypted_chars) 
 
-# Input encrypted message as numbers and number of shifts
-encrypted_numbers = input("Enter the encrypted message as numbers (separated by spaces): ")
+# Taking input for the encoded message and the number of shifts
+encoded_message = input("Enter the encoded message as numbers: ")
 num_shifts = int(input("Enter the number of shifts: "))
 
-original_message = decrypt_message(encrypted_numbers, num_shifts)
-print("Original message: " + original_message)
+# Calling the decryption function.
+decrypted_message = decrypt_message(encoded_message, num_shifts) 
+# Displaying the decrypted message. 
+print("Decrypted message: " + decrypted_message)  
