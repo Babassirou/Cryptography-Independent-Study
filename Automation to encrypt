@@ -1,20 +1,35 @@
 def encrypt_message(message, num_shifts):
-    encrypted_numbers = []
-    for char in message:
-        if char.isalpha():
-            if char.islower():
-                encrypted_char = chr(((ord(char) - ord('a') + num_shifts) % 26) + ord('a'))
+    # Defining the custom alphabet, including space and period.
+    alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ." 
+    # Calculating the length of the custom alphabet.
+    alphabet_length = len(alphabet)  
+    # Creating an empty list to store encrypted numbers.
+    encrypted_numbers = [] 
+# Iterating through each character in the input message.
+    for char in message:  
+        try:
+            # Checking if the character is in the custom alphabet (case-insensitive).
+            if char.upper() in alphabet: 
+                # Checking if the original character is uppercase.
+                is_upper = char.isupper() 
+                # Calculating the shifted index after applying the encryption algorithm.
+                index = (alphabet.index(char.upper()) + num_shifts) % alphabet_length  
+                # Creating the encrypted character with the correct case.
+                encrypted_char = alphabet[index] if is_upper else alphabet[index].lower() 
+                # Adding 1 to convert from 0-based to 1-based index and appending the encrypted index as a string.
+                encrypted_numbers.append(str(index + 1))  
             else:
-                encrypted_char = chr(((ord(char) - ord('A') + num_shifts) % 26) + ord('A'))
-            encrypted_numbers.append(str(ord(encrypted_char)))
-        else:
-            encrypted_numbers.append(str(ord(char)))
+                # Keeping non-alphabetic characters unchanged in the encrypted message.
+                encrypted_numbers.append(char)  
+        except ValueError:
+            # Handling the case where the character is not in the custom alphabet.
+            encrypted_numbers.append(char) 
+# Combining the encrypted numbers to form the final encrypted message.
+    return " ".join(encrypted_numbers)  
 
-    return " ".join(encrypted_numbers)
-
-# Input message and number of shifts
+# Taking input for the message and the number of shifts
 message = input("Enter the message to encrypt: ")
 num_shifts = int(input("Enter the number of shifts: "))
 
-encrypted_message = encrypt_message(message, num_shifts)
-print("Encrypted message as numbers: " + encrypted_message)
+encrypted_message = encrypt_message(message, num_shifts)  # Calling the encryption function.
+print("Encrypted message as numbers: " + encrypted_message)  # Displaying the encrypted message in numeric form.
