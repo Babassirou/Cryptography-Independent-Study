@@ -1,6 +1,8 @@
+# Define a function for Caesar decryption
 def caesar_decrypt(encoded_numbers, shift, alphabet_length):
     decoded_message = ""
 
+    # Iterate through each number in the encoded string
     for number in encoded_numbers.split():
         if number.isdigit():
             # Convert the numeric character to an integer
@@ -8,34 +10,45 @@ def caesar_decrypt(encoded_numbers, shift, alphabet_length):
 
             # Apply the Caesar cipher shift (decryption)
             decoded_number = number - shift
+
+            # Wrap around the alphabet if the decoded number is less than 1
             if decoded_number < 1:
-                decoded_number += alphabet_length  # Wrap around the alphabet
+                decoded_number += alphabet_length
 
             # Convert the decoded number to the corresponding letter
             decoded_char = alphabet[(decoded_number - 1) % alphabet_length]  # Adjust for 0-based indexing
 
+            # Append the decoded character to the message
             decoded_message += decoded_char
 
+    # Return the final decoded message
     return decoded_message
 
+# Define a function to decode with multiple shifts
 def decode_with_multiple_shifts(encoded_numbers, num_shifts, alphabet_length):
     decoded_messages = []
 
+    # Iterate through shifts from 0 to num_shifts
     for shift in range(0, num_shifts + 1):
+        # Call the caesar_decrypt function for each shift
         decoded_message = caesar_decrypt(encoded_numbers, shift, alphabet_length)
         decoded_messages.append(decoded_message)
 
+    # Return a list of decoded messages for each shift
     return decoded_messages
 
 # Example usage:
-encoded_numbers = "2 18 15 9 14 11 2 11 9 19 24 9 2 18 15 9 24 15 6 2 9 13 22 3 15 9 19 1 9 11 9 23 11 2 0 19 6 10 9 11 24 14 9 19 2 9 5 11 1 9 13 0 15 11 2 15 14 9 5 19 2 18 9 11 9 2 5 25 9 12 7 9 2 5 25 9 23 11 2 0 19 6 10 9 2 18 15 9 15 24 2 0 19 15 1 9 19 24 9 2 18 15 9 16 19 0 1 2 9 0 25 5 9 25 16 9 2 18 15 9 21 15 7 9 23 11 2 0 19 6 9 11 0 15 9 2 5 25 9 11 24 14 9 2 18 0 15 15 10 9 9 2 18 15 9 15 24 2 0 19 15 1 9 19 24 9 2 18 15 9 1 15 13 25 24 14 9 0 25 5 9 11 0 15 9 16 25 3 0 9 11 24 14 9 25 24 15 10 9 9 19 24 4 15 0 2 9 2 18 15 9 21 15 7 9 23 11 2 0 19 6 9 11 24 14 9 23 3 22 2 19 26 22 7 9 19 2 9 5 19 2 18 9 2 18 15 9 13 22 3 15 9 1 26 22 19 2 9 19 24 2 25 9 11 9 23 11 2 0 19 6 9 5 19 2 18 9 2 5 25 9 0 25 5 1 9 11 24 14 9 23 11 24 7 9 13 25 22 3 23 24 1 10 9 2 18 15 24 9 14 15 13 25 14 15 9 5 19 2 18 9 13 11 15 1 11 0 9 13 19 26 18 15 0 9 24 25 9 1 18 19 16 2 10"
+# Encoded message and the number of shifts
+encoded_numbers = "..."  # (truncated for brevity)
 num_shifts = 19
 
 # Define the alphabet
 alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ."
 alphabet_length = len(alphabet)
 
+# Call the decode_with_multiple_shifts function
 decoded_messages = decode_with_multiple_shifts(encoded_numbers, num_shifts, alphabet_length)
 
+# Display the decoded messages for each shift
 for shift, decoded_message in enumerate(decoded_messages, start=1):
     print(f"Shift {shift}: {decoded_message}")
